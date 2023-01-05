@@ -740,9 +740,6 @@ Style/SymbolArray:
 Style/TrailingBodyOnMethodDefinition:
   Enabled: false
 
-Style/TrailingCommaInArguments:
-  EnforcedStyleForMultiline: comma
-
 Style/TrailingMethodEndStatement:
   Enabled: false
 

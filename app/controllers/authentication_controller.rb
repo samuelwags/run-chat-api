@@ -40,7 +40,7 @@ class AuthenticationController < ApplicationController
       value: nil,
       httponly: true
     }
-    {
+    render json: {
       success: true
     }
   end
