@@ -8,6 +8,6 @@ class User < ApplicationRecord
   validates :user_name, presence: true, uniqueness: true
   validates :password_digest, presence: true
 
-  has_many :runs
-  has_many :personal_records
+  has_many :runs, dependent: :destroy
+  has_many :personal_records, dependent: :destroy
 end

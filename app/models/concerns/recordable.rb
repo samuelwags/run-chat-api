@@ -5,7 +5,7 @@ module Recordable
 
   included do
     def prs
-      PersonalRecord::CATEGORY_COMPARISONS.each_with_object({}) do |c, a|
+      PersonalRecord::CATEGORY_COMPARISONS.keys.each_with_object({}) do |c, a|
         a[c] = personal_records
           .where(category: c)
           .includes(:run)

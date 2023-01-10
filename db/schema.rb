@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_10_061231) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_10_071246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_061231) do
   end
 
   create_table "runs", force: :cascade do |t|
-    t.date "date"
+    t.datetime "date", precision: nil
     t.float "distance"
     t.integer "time"
     t.text "description"
@@ -55,7 +55,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_061231) do
   end
 
   add_foreign_key "invites", "users"
-  add_foreign_key "personal_records", "runs"
   add_foreign_key "personal_records", "users"
   add_foreign_key "runs", "users"
 end

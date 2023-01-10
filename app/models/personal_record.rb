@@ -4,7 +4,7 @@ class PersonalRecord < ApplicationRecord
   CATEGORY_COMPARISONS = {
     distance: :>,
     split: :<,
-    average: :<
+    average: :>
   }.freeze
 
   belongs_to :user
