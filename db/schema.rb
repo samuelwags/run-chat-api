@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_10_030120) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_10_061231) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "invites", force: :cascade do |t|
+    t.string "key"
+    t.bigint "user_id"
+    t.date "expires"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_invites_on_user_id"
+  end
+
   create_table "personal_records", force: :cascade do |t|
-    t.string "type", null: false
+    t.string "category", null: false
     t.bigint "user_id"
     t.bigint "run_id"
     t.datetime "created_at", null: false
@@ -32,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_030120) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "split"
     t.index ["user_id"], name: "index_runs_on_user_id"
   end
 
@@ -44,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_030120) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "invites", "users"
   add_foreign_key "personal_records", "runs"
   add_foreign_key "personal_records", "users"
   add_foreign_key "runs", "users"

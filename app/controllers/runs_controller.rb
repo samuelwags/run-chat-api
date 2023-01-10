@@ -3,7 +3,14 @@
 class RunsController < ApplicationController
   def index
     @runs = Run.includes(:user).all
-    render json: @runs, include: { user: { only: :user_name } }, status: 200
+    render(
+      json: @runs,
+      include: {
+        user: { only: :user_name }
+      },
+      methods: :prs,
+      status: 200
+    )
   end
 
   def create
@@ -15,10 +22,10 @@ class RunsController < ApplicationController
       user: @current_user
     )
 
-    if @run.save
-      render json: @run, inclued: { user: { only: :user_name } }, status: 201
+    if @run.save!
+      render json: @run, include: { user: { only: :user_name } }, status: 201
     else
-      render json: { errors: @run.errors.full_messages }, status: 503
+      render json: { errors: @run.errors }, status: 503
     end
   end
 end

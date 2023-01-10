@@ -5,7 +5,7 @@ require 'securerandom'
 class AuthenticationController < ApplicationController
   include JwtToken
 
-  skip_before_action :authenticate_user, only: [:login]
+  skip_before_action :authenticate_user, only: [:login, :create]
 
   def login
     @user = User.find_by_user_name(params[:username])
@@ -40,6 +40,41 @@ class AuthenticationController < ApplicationController
       value: nil,
       httponly: true
     }
+    render json: {
+      success: true
+    }
+  end
+
+  def create
+    key = params[:inviteKey]
+    invite = Invite.find_by_key(key)
+
+    if invite.blank?
+      return render json: { error: 'Invite does not exist.' }
+    end
+
+    if invite.expires.past?
+      return render json: { error: 'Invite has expired.' }
+    end
+
+    if invite.user_id.present?
+      return render json: { error: 'Invite has already been used.' }
+    end
+
+    if User.find_by_user_name(params[:username]).present?
+      return render json: { error: 'Username is taken.' }
+    end
+
+    if params[:password].blank? || params[:password].length < 3
+      return render json: { error: 'You need a longer password.' }
+    end
+
+    user = User.create(
+      user_name: params[:username],
+      password: params[:password]
+    )
+    user.save
+    invite.update!(user_id: user.id)
     render json: {
       success: true
     }
