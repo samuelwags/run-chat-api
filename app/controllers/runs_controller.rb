@@ -2,7 +2,7 @@
 
 class RunsController < ApplicationController
   def index
-    @runs = Run.includes(:user).all.order(date: :desc)
+    @runs = Run.includes(:user).all.order(created_at: :desc).first(10)
     render(
       json: @runs,
       include: {
@@ -15,7 +15,7 @@ class RunsController < ApplicationController
 
   def create
     @run = Run.new(
-      date: Time.now,
+      date: params[:date],
       distance: params[:distance],
       time: params[:time],
       description: params[:description],

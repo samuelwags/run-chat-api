@@ -83,7 +83,8 @@ class AuthenticationController < ApplicationController
   def session
     render json: {
       is_logged_in: true,
-      user_name: @current_user.user_name
+      user_name: @current_user.user_name,
+      user_id: @current_user.id
     }
   end
 end

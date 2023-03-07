@@ -10,7 +10,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: @user, status: 200
+    user = User.find(params[:id])
+    render json: user, methods: :training_plans, status: 200
   end
 
   def create
