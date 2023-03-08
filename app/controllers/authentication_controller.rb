@@ -23,7 +23,8 @@ class AuthenticationController < ApplicationController
         value: token,
         expires: 7.days.from_now,
         httponly: true,
-        samesite: 'None'
+        same_site: :none,
+        secure: true
       }
 
       render json: {
