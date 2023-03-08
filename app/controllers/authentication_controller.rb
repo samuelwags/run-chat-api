@@ -22,7 +22,8 @@ class AuthenticationController < ApplicationController
       cookies.signed[:auth_token] = {
         value: token,
         expires: 7.days.from_now,
-        httponly: true
+        httponly: true,
+        samesite: 'None'
       }
 
       render json: {
