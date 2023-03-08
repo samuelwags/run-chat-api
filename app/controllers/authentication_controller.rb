@@ -39,8 +39,9 @@ class AuthenticationController < ApplicationController
   def logout
     @current_user.update!(uuid: SecureRandom.uuid)
     cookies.signed[:auth_token] = {
-      value: nil,
-      httponly: true
+      httponly: true,
+      same_site: :none,
+      secure: true
     }
     render json: {
       success: true
